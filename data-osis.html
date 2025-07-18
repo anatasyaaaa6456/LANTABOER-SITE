@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data OSIS MTs Lantaboer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " rel="stylesheet">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      color: #212121;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Particle Background */
+    .background-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(13, 76, 143, 0.3);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Title Section */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1.hero-title {
+      font-size: 2.5rem;
+      color: #0d47a1;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+      animation: bounceIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      60% { opacity: 1; transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    h1.hero-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      margin: 10px auto 0;
+      background: linear-gradient(to right, #0d47a1, #42a5f5);
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      color: #444;
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    /* Floating Menu Button (Hamburger Animasi) */
+    .menu-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #0d47a1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 9999;
+      transition: transform 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: white;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .menu-btn span::before {
+      transform: translateY(-6px);
+    }
+
+    .menu-btn span::after {
+      transform: translateY(6px);
+    }
+
+    .menu-btn.active span {
+      background: transparent;
+    }
+
+    .menu-btn.active span::before {
+      transform: translateY(0) rotate(45deg);
+      background: white;
+    }
+
+    .menu-btn.active span::after {
+      transform: translateY(0) rotate(-45deg);
+      background: white;
+    }
+
+    /* Overlay Menu */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 260px;
+      height: 100vh;
+      background: rgba(13, 71, 161, 0.95);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 2rem;
+      gap: 1.5rem;
+      transition: right 0.5s ease;
+      z-index: 9998;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-overlay.active {
+      right: 0;
+    }
+
+    .menu-overlay a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s ease, color 0.3s ease;
+    }
+
+    .menu-overlay a:hover {
+      transform: translateX(5px);
+      color: #ffe0b2;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.2s ease;
+    }
+
+    .overlay-close:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Notifikasi Selamat Datang */
+    .notification {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d47a1;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      z-index: 9997;
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .notification.show {
+      top: 30px;
+      opacity: 1;
+    }
+
+    .notification.hide {
+      top: -100px;
+      opacity: 0;
+    }
+
+    /* Logo Sekolah di Tengah */
+    .school-logo-center {
+      display: block;
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      margin: 2rem auto;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .school-logo-center:hover {
+      transform: rotate(10deg) scale(1.1);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    /* Kartu Anggota OSIS */
+    .osis-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .osis-card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-left: 6px solid #0d47a1;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .osis-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .osis-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -70%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { left: -70%; }
+      100% { left: 120%; }
+    }
+
+    .osis-card h3 {
+      color: #0d47a1;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .osis-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .osis-card .role {
+      font-weight: bold;
+      color: #1565c0;
+    }
+
+    .osis-card .desc {
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      color: #333;
+    }
+
+    /* Fade Up Animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      color: #aaa;
+      animation: floatFooter 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatFooter {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-3px); }
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .school-logo-center {
+        width: 120px;
+        height: 120px;
+      }
+
+      h1.hero-title {
+        font-size: 2rem;
+      }
+
+      .osis-card h3 {
+        font-size: 1rem;
+      }
+
+      .osis-card p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1.hero-title {
+        font-size: 1.8rem;
+      }
+
+      .osis-card h3 {
+        font-size: 0.95rem;
+      }
+
+      .osis-card .desc {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <div class="background-particles" id="particles"></div>
+
+  <!-- Notifikasi Selamat Datang -->
+  <div id="notif" class="notification">Selamat datang di data OSIS kami!</div>
+
+  <!-- Logo Sekolah -->
+  <img src="https://files.catbox.moe/1f9s9c " alt="Logo Sekolah" class="school-logo-center fade-up show">
+
+  <!-- Floating Menu Button -->
+  <div class="menu-btn" id="menuBtn">
+    <span id="hamburger-line"></span>
+  </div>
+
+  <!-- Overlay Menu -->
+  <div class="menu-overlay" id="menuOverlay">
+    <span class="overlay-close" id="closeBtn">&times;</span>
+    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+    <a href="jadwal-mpls.html"><i class="fas fa-calendar-alt"></i> Jadwal MPLS</a>
+    <a href="#"><i class="fas fa-book-open"></i> Jadwal Mapel</a>
+    <a href="data-guru.html"><i class="fas fa-user-tie"></i> Data Guru</a>
+  </div>
+
+  <!-- Konten Utama -->
+  <div class="container">
+    <header>
+      <h1 class="hero-title fade-up show"><i class="fas fa-users"></i> Data OSIS</h1>
+      <p class="subtitle fade-up show">MTS LANTABOER</p>
+    </header>
+
+    <!-- Daftar Anggota OSIS -->
+    <div class="osis-list fade-up show">
+      <!-- Ketua -->
+      <div class="osis-card">
+        <h3>Tari</h3>
+        <p><span class="role">Ketua OSIS</span></p>
+        <p class="desc">Memimpin rapat, mengarahkan kegiatan, dan menjaga koordinasi antar divisi.</p>
+      </div>
+
+      <!-- Wakil -->
+      <div class="osis-card">
+        <h3>Melvy</h3>
+        <p><span class="role">Wakil OSIS</span></p>
+        <p class="desc">Membantu ketua dan menjadi pengganti ketua saat dibutuhkan.</p>
+      </div>
+
+      <!-- Sekretaris 1 -->
+      <div class="osis-card">
+        <h3>Aisyah</h3>
+        <p><span class="role">Sekretaris 1</span></p>
+        <p class="desc">Menyusun laporan, mengatur arsip, dan menjadi koordinator administrasi OSIS.</p>
+      </div>
+
+      <!-- Sekretaris 2 -->
+      <div class="osis-card">
+        <h3>Nisa</h3>
+        <p><span class="role">Sekretaris 2</span></p>
+        <p class="desc">Membantu sekretaris 1 dan menyiapkan agenda rapat.</p>
+      </div>
+
+      <!-- Dokumentasi & Publikasi -->
+      <div class="osis-card">
+        <h3>Yunda</h3>
+        <p><span class="role">Dokumentasi & Publikasi</span></p>
+        <p class="desc">Mengabadikan momen penting dan mempublikasikan di media sosial.</p>
+      </div>
+
+      <div class="osis-card">
+        <h3>Januar</h3>
+        <p><span class="role">Dokumentasi & Publikasi</span></p>
+        <p class="desc">Membantu pengambilan foto, video, dan publikasi kegiatan OSIS.</p>
+      </div>
+
+      <!-- Eskul -->
+      <div class="osis-card">
+        <h3>Haikal</h3>
+        <p><span class="role">Ekstrakurikuler</span></p>
+        <p class="desc">Mengelola kegiatan eskul dan menjamin keterlibatan siswa.</p>
+      </div>
+
+      <div class="osis-card">
+        <h3>Manda</h3>
+        <p><span class="role">Ekstrakurikuler</span></p>
+        <p class="desc">Menjadi pendamping eskul dan menjaga antusiasme siswa.</p>
+      </div>
+
+      <!-- Keagamaan -->
+      <div class="osis-card">
+        <h3>Yahya</h3>
+        <p><span class="role">Keagamaan</span></p>
+        <p class="desc">Mengelola kegiatan keagamaan dan menjaga suasana religius.</p>
+      </div>
+
+      <div class="osis-card">
+        <h3>Arip</h3>
+        <p><span class="role">Keagamaan</span></p>
+        <p class="desc">Membimbing siswa dalam kegiatan ibadah dan pembinaan rohani.</p>
+      </div>
+
+      <!-- Keamanan -->
+      <div class="osis-card">
+        <h3>Farid</h3>
+        <p><span class="role">Keamanan</span></p>
+        <p class="desc">Menjaga ketertiban selama kegiatan berlangsung.</p>
+      </div>
+
+      <div class="osis-card">
+        <h3>Dika</h3>
+        <p><span class="role">Keamanan</span></p>
+        <p class="desc">Mengatur keamanan acara dan menjaga kenyamanan lingkungan.</p>
+      </div>
+
+      <div class="osis-card">
+        <h3>Tasya</h3>
+        <p><span class="role">Keamanan</span></p>
+        <p class="desc">Bertugas menjaga ketertiban dan kenyamanan acara.</p>
+      </div>
+
+      <!-- Bendahara -->
+      <div class="osis-card">
+        <h3>Hani</h3>
+        <p><span class="role">Bendahara</span></p>
+        <p class="desc">Mengelola keuangan dan anggaran kegiatan OSIS.</p>
+      </div>
+
+      <!-- Kebersihan Lingkungan -->
+      <div class="osis-card">
+        <h3>Saith</h3>
+        <p><span class="role">Kebersihan Lingkungan</span></p>
+        <p class="desc">Menjaga kebersihan sekolah dan lingkungan acara.</p>
+      </div>
+
+      <!-- Humas -->
+      <div class="osis-card">
+        <h3>Basith</h3>
+        <p><span class="role">Humas</span></p>
+        <p class="desc">Membangun relasi dengan pihak luar dan instansi terkait.</p>
+      </div>
+
+      <div class="osis-card">
+        <h3>Diki</h3>
+        <p><span class="role">Humas</span></p>
+        <p class="desc">Membantu Basith dalam menjalin kerja sama eksternal.</p>
+      </div>
+
+      <!-- Team IT -->
+      <div class="osis-card">
+        <h3>Kyoutaka</h3>
+        <p><span class="role">Team IT</span></p>
+        <p class="desc">Just Demon</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer fade-up show">
+    Powered by @Kyoutaka.html [OSIS LANTABOER]
+  </footer>
+
+  <script>
+    // Generate particles
+    const particleContainer = document.getElementById('particles');
+    for (let i = 0; i < 100; i++) {
+      const div = document.createElement('div');
+      div.classList.add('particle');
+      div.style.left = Math.random() * 100 + '%';
+      div.style.top = Math.random() * 100 + '%';
+      div.style.width = div.style.height = `${Math.random() * 5 + 5}px`;
+      div.style.animationDuration = `${Math.random() * 5 + 10}s`;
+      div.style.opacity = Math.random();
+      particleContainer.appendChild(div);
+    }
+
+    // Fade up animation on scroll
+    const faders = document.querySelectorAll(".fade-up");
+    const appearOnScroll = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("show");
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Floating menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("active");
+      menuOverlay.classList.toggle("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      menuBtn.classList.remove("active");
+      menuOverlay.classList.remove("active");
+    });
+
+    window.addEventListener("click", (e) => {
+      if (
+        !menuOverlay.contains(e.target) &&
+        e.target !== menuBtn &&
+        !document.getElementById("hamburger-line")?.parentElement.contains(e.target)
+      ) {
+        menuOverlay.classList.remove("active");
+        menuBtn.classList.remove("active");
+      }
+    });
+
+    // Efek klik pada kartu OSIS
+    document.querySelectorAll('.osis-card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.style.backgroundColor = '#e3f2fd';
+        card.style.transform = 'scale(1.03)';
+        setTimeout(() => {
+          card.style.backgroundColor = '';
+          card.style.transform = '';
+        }, 300);
+      });
+    });
+
+    // Notifikasi saat halaman dimuat
+    window.addEventListener('load', () => {
+      const notif = document.getElementById('notif');
+      notif.classList.add('show');
+      setTimeout(() => {
+        notif.classList.add('hide');
+      }, 4000);
+    });
+  </script>
+</body>
+</html>

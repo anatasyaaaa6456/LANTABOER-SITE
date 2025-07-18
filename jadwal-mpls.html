@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jadwal MPLS 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " rel="stylesheet">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      color: #212121;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Particle Background */
+    .background-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(13, 76, 143, 0.3);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Logo Sekolah di Tengah */
+    .school-logo-center {
+      display: block;
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      margin: 2rem auto;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .school-logo-center:hover {
+      transform: rotate(10deg) scale(1.1);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    /* Title Section */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1.hero-title {
+      font-size: 2.5rem;
+      color: #0d47a1;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+      animation: bounceIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      60% { opacity: 1; transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    h1.hero-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      margin: 10px auto 0;
+      background: linear-gradient(to right, #0d47a1, #42a5f5);
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      color: #444;
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    /* Floating Menu Button (Hamburger Animasi) */
+    .menu-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #0d47a1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 9999;
+      transition: transform 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: white;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .menu-btn span::before {
+      transform: translateY(-6px);
+    }
+
+    .menu-btn span::after {
+      transform: translateY(6px);
+    }
+
+    .menu-btn.active span {
+      background: transparent;
+    }
+
+    .menu-btn.active span::before {
+      transform: translateY(0) rotate(45deg);
+      background: white;
+    }
+
+    .menu-btn.active span::after {
+      transform: translateY(0) rotate(-45deg);
+      background: white;
+    }
+
+    /* Overlay Menu */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 260px;
+      height: 100vh;
+      background: rgba(13, 71, 161, 0.95);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 2rem;
+      gap: 1.5rem;
+      transition: right 0.5s ease;
+      z-index: 9998;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-overlay.active {
+      right: 0;
+    }
+
+    .menu-overlay a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s ease, color 0.3s ease;
+    }
+
+    .menu-overlay a:hover {
+      transform: translateX(5px);
+      color: #ffe0b2;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.2s ease;
+    }
+
+    .overlay-close:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Notifikasi Selamat Datang */
+    .notification {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d47a1;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      z-index: 9997;
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .notification.show {
+      top: 30px;
+      opacity: 1;
+    }
+
+    .notification.hide {
+      top: -100px;
+      opacity: 0;
+    }
+
+    /* Countdown Timer */
+    .countdown-mini {
+      text-align: center;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      animation: fadeInDown 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeInDown {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .time-chip {
+      background-color: #0d47a1;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      font-weight: bold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .time-chip:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Jadwal Harian */
+    .day-box {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      border-left: 8px solid #0d47a1;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .day-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -70%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { left: -70%; }
+      100% { left: 120%; }
+    }
+
+    .day-box:hover {
+      transform: translateY(-10px) scale(1.01);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .day-box h3 {
+      color: #0d47a1;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      line-height: 1.4;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    li:hover {
+      background-color: #e3f2fd;
+      transform: translateX(5px);
+    }
+
+    strong {
+      color: #1565c0;
+    }
+
+    /* Informasi Tambahan */
+    .info-sections {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .info-box {
+      background-color: #f8faff;
+      padding: 1.2rem;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+    }
+
+    .info-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .info-box h3 {
+      color: #1565c0;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* Snack Misterius */
+    .snack-note {
+      background-color: #e3f2fd;
+      border: 2px dashed #1565c0;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      position: relative;
+      font-style: italic;
+      color: #1a2b5c;
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 5px rgba(21, 101, 192, 0.3); }
+      50% { box-shadow: 0 0 15px rgba(21, 101, 192, 0.6); }
+      100% { box-shadow: 0 0 5px rgba(21, 101, 192, 0.3); }
+    }
+
+    /* Snack List Interaktif */
+    .snack-list {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 10px 0;
+      scroll-behavior: smooth;
+    }
+
+    .snack-item {
+      background-color: #ffffff;
+      color: #1e3c72;
+      border-radius: 10px;
+      padding: 12px 16px;
+      min-width: 150px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      flex-shrink: 0;
+      cursor: grab;
+    }
+
+    .snack-item:hover {
+      transform: scale(1.1);
+      background-color: #e0e0e0;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Fade Up Animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    footer.footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      color: #aaa;
+      animation: floatFooter 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatFooter {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-3px); }
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .countdown-mini {
+        flex-direction: column;
+      }
+
+      .time-chip {
+        width: 100%;
+        text-align: center;
+      }
+
+      .day-box h3 {
+        font-size: 1.2rem;
+      }
+
+      .snack-item {
+        min-width: 130px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1.hero-title {
+        font-size: 1.8rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <div class="background-particles" id="particles"></div>
+
+  <!-- Notifikasi Selamat Datang -->
+  <div id="notif" class="notification">SELAMAT DATANG :v</div>
+
+  <!-- Logo Sekolah di Tengah -->
+  <img src="https://files.catbox.moe/1f9s9c " alt="Logo Sekolah" class="school-logo-center fade-up">
+
+  <!-- Konten Utama -->
+  <div class="container">
+    <header>
+      <h1 class="hero-title fade-up show"><i class="fas fa-calendar-alt"></i> Jadwal MPLS 2025</h1>
+      <p class="subtitle fade-up show">MTS LANTABOER</p>
+    </header>
+
+    <!-- Deskripsi Panjang -->
+    <div class="description fade-up show">
+      <p>Halo teman-teman! 👋</p>
+      <p>Selamat datang di halaman resmi <strong>Jadwal MPLS 2025</strong> MTs Lantaboer. MPLS adalah kegiatan wajib yang akan membantu kalian mengenal lingkungan sekolah, guru, dan teman-teman baru.</p>
+      <p>Portal ini dibuat oleh @Kyoutaka.html sebagai bagian dari OSIS. Semua informasi disusun rapi dan informatif, dilengkapi dengan animasi, efek interaktif, dan partikel latar belakang dinamis untuk pengalaman terbaik saat membuka halaman ini.</p>
+      <p>MPLS akan berlangsung selama 3 hari: Rabu, Kamis, dan Jumat. Setiap hari memiliki kegiatan unik dan menarik. Pastikan kalian datang tepat waktu, membawa perlengkapan sesuai jadwal, dan tetap semangat! 💪</p>
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-mini fade-up show">
+      <div class="time-chip" id="days"><span id="dayNum">0</span> Hari</div>
+      <div class="time-chip" id="hours"><span id="hourNum">0</span> Jam</div>
+      <div class="time-chip" id="minutes"><span id="minuteNum">0</span> Menit</div>
+      <div class="time-chip" id="seconds"><span id="secondNum">0</span> Detik</div>
+    </div>
+
+    <!-- Jadwal Harian -->
+    <div class="schedule-grid fade-up show">
+      <!-- Rabu -->
+      <div class="day-box">
+        <h3><i class="fas fa-sun"></i> Rabu, 16 Juli 2025</h3>
+        <ul>
+          <li>07.00–08.00 → Pembukaan & Pertunjukan Ekskul MTs Lan Taboer (<strong>Kepala Madrasah & OSIS</strong>)</li>
+          <li>08.00–09.00 → Ke Lan Taboer-an (<strong>Prof. Dr. H. Bambang</strong>)</li>
+          <li>09.00–10.00 → Pengenalan diri: Aku suka apa, aku bakat apa, aku suka sekolah di MTs Lan Taboer (<strong>OSIS & Bu Okta</strong>)</li>
+          <li>10.00–11.00 → Istirahat / Sholat Dhuha</li>
+          <li>11.00–12.00 → Jadi pelajar muslim yang keren : Kreatif, Inovatif & Beretika (<strong>Bpk Deddy</strong>)</li>
+          <li>12.00 → Sholat Dzuhur & Pulang</li>
+        </ul>
+      </div>
+
+      <!-- Kamis -->
+      <div class="day-box">
+        <h3><i class="fas fa-cloud-sun"></i> Kamis, 17 Juli 2025</h3>
+        <ul>
+          <li>07.00–08.00 → Tadarus & Sholat Dhuha</li>
+          <li>08.00–09.00 → Cara belajar generasi Z (GenZ) (<strong>Bpk Isrofil</strong>)</li>
+          <li>09.00–10.00 → Jiwa sehat dalam tubuh kuat (<strong>Tim Puskesmas</strong>)</li>
+          <li>10.00–11.00 → Istirahat / Sholat Dhuha</li>
+          <li>11.00–12.00 → Ice Breaking (<strong>OSIS</strong>)</li>
+          <li>12.00 → Sholat Dzuhur & Pulang</li>
+        </ul>
+      </div>
+
+      <!-- Jumat -->
+      <div class="day-box">
+        <h3><i class="fas fa-moon"></i> Jum'at, 18 Juli 2025</h3>
+        <ul>
+          <li>06.30–07.00 → Tadarus</li>
+          <li>07.00–08.00 → Bahaya judi online dan NAPZA (<strong>Aiptu Sardjhono</strong>)</li>
+          <li>08.00–09.00 → Belajar Public Speaking (<strong>Bpk. Arief</strong>)</li>
+          <li>09.00–10.00 → Penutupan (<strong>Yayasan, Guru & Staff</strong>)</li>
+          <li>Setelah penutupan: Acara bebas</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Informasi Tambahan -->
+    <div class="info-sections">
+      <div class="info-box">
+        <h3><i class="fas fa-uniform"></i> Kode Seragam</h3>
+        <ul>
+          <li>Rabu: Pramuka lengkap</li>
+          <li>Kamis: Merah/Batik dari sekolah asal</li>
+          <li>Jumat: Putih Merah</li>
+        </ul>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="fas fa-briefcase"></i> Perlengkapan Wajib</h3>
+        <ul>
+          <li>Name Tag:
+            <ul>
+              <li>Cowok = Biru</li>
+              <li>Cewek = Pink</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="fas fa-microphone-alt"></i> MC & Backsound</h3>
+        <ul>
+          <li>MC: Nisa</li>
+          <li>Backsound: Haikal</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Snack Misterius -->
+    <div class="snack-note fade-up">
+      <strong>Snack Misterius harus dibawa semuanya!</strong>
+      <div class="snack-list">
+        <div class="snack-item">Roti Ketawa</div>
+        <div class="snack-item">Chiki Pesawat Tempur</div>
+        <div class="snack-item">Coklat Lebih Baik</div>
+        <div class="snack-item">Permen Maksiat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer fade-up show">
+    Powered by @Kyoutaka.html [OSIS LANTABOER]
+  </footer>
+
+  <!-- Floating Menu Button -->
+  <div class="menu-btn" id="menuBtn">
+    <span id="hamburger-line"></span>
+  </div>
+
+  <!-- Overlay Menu -->
+  <div class="menu-overlay" id="menuOverlay">
+    <span class="overlay-close" id="closeBtn">&times;</span>
+    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+    <a href="jadwal-mapel.html"><i class="fas fa-book-open"></i> Jadwal Mapel</a>
+    <a href="data-guru.html"><i class="fas fa-user-tie"></i> Data Guru</a>
+    <a href="data-osis.html"><i class="fas fa-users"></i> Data OSIS</a>
+  </div>
+
+  <script>
+    // Generate particles
+    const particleContainer = document.getElementById('particles');
+    for (let i = 0; i < 100; i++) {
+      const div = document.createElement('div');
+      div.classList.add('particle');
+      div.style.left = Math.random() * 100 + '%';
+      div.style.top = Math.random() * 100 + '%';
+      div.style.width = div.style.height = `${Math.random() * 5 + 5}px`;
+      div.style.animationDuration = `${Math.random() * 5 + 10}s`;
+      div.style.opacity = Math.random();
+      particleContainer.appendChild(div);
+    }
+
+    // Fade up animation on scroll
+    const faders = document.querySelectorAll(".fade-up");
+    const appearOnScroll = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("show");
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Add click effect to snack items
+    document.querySelectorAll('.snack-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.style.backgroundColor = '#ffe0b2';
+        item.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          item.style.backgroundColor = '';
+          item.style.transform = '';
+        }, 300);
+      });
+    });
+
+    // Countdown Script
+    function startCountdown(targetDate) {
+      const dayEl = document.getElementById("dayNum");
+      const hourEl = document.getElementById("hourNum");
+      const minuteEl = document.getElementById("minuteNum");
+      const secondEl = document.getElementById("secondNum");
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance <= 0) {
+          dayEl.textContent = "0";
+          hourEl.textContent = "0";
+          minuteEl.textContent = "0";
+          secondEl.textContent = "0";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        dayEl.textContent = days;
+        hourEl.textContent = hours;
+        minuteEl.textContent = minutes;
+        secondEl.textContent = seconds;
+      }
+
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+    }
+
+    // Target waktu: 19 Juli 2025 jam 06:30
+    const eventDate = new Date("July 19, 2025 06:30:00").getTime();
+    startCountdown(eventDate);
+
+    // Floating menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("active");
+      menuOverlay.classList.toggle("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      menuBtn.classList.remove("active");
+      menuOverlay.classList.remove("active");
+    });
+
+    window.addEventListener("click", (e) => {
+      if (
+        !menuOverlay.contains(e.target) &&
+        e.target !== menuBtn &&
+        !document.getElementById("hamburger-line")?.parentElement.contains(e.target)
+      ) {
+        menuOverlay.classList.remove("active");
+        menuBtn.classList.remove("active");
+      }
+    });
+
+    // Notifikasi selamat datang
+    window.addEventListener('load', () => {
+      const notif = document.getElementById('notif');
+      notif.classList.add('show');
+      setTimeout(() => {
+        notif.classList.add('hide');
+      }, 4000);
+    });
+  </script>
+</body>
+</html>

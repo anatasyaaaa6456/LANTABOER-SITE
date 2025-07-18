@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jadwal Pelajaran MTs Lantaboer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " rel="stylesheet">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      color: #212121;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Particle Background */
+    .background-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(13, 76, 143, 0.3);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Title Section */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1.hero-title {
+      font-size: 2.5rem;
+      color: #0d47a1;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+      animation: bounceIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      60% { opacity: 1; transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    h1.hero-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      margin: 10px auto 0;
+      background: linear-gradient(to right, #0d47a1, #42a5f5);
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      color: #444;
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    /* Floating Menu Button (Hamburger Animasi) */
+    .menu-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #0d47a1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 9999;
+      transition: transform 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: white;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .menu-btn span::before {
+      transform: translateY(-6px);
+    }
+
+    .menu-btn span::after {
+      transform: translateY(6px);
+    }
+
+    .menu-btn.active span {
+      background: transparent;
+    }
+
+    .menu-btn.active span::before {
+      transform: translateY(0) rotate(45deg);
+      background: white;
+    }
+
+    .menu-btn.active span::after {
+      transform: translateY(0) rotate(-45deg);
+      background: white;
+    }
+
+    /* Overlay Menu */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 260px;
+      height: 100vh;
+      background: rgba(13, 71, 161, 0.95);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 3rem 2rem;
+      gap: 1.5rem;
+      transition: right 0.5s ease;
+      z-index: 9998;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-overlay.active {
+      right: 0;
+    }
+
+    .menu-overlay a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s ease, color 0.3s ease;
+    }
+
+    .menu-overlay a:hover {
+      transform: translateX(5px);
+      color: #ffe0b2;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.2s ease;
+    }
+
+    .overlay-close:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Notifikasi Selamat Datang */
+    .notification {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d47a1;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      font-size: 1rem;
+      z-index: 9997;
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .notification.show {
+      top: 30px;
+      opacity: 1;
+    }
+
+    .notification.hide {
+      top: -100px;
+      opacity: 0;
+    }
+
+    /* Logo Sekolah di Tengah */
+    .school-logo-center {
+      display: block;
+      width: 150px;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      margin: 2rem auto;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .school-logo-center:hover {
+      transform: rotate(10deg) scale(1.1);
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    /* Kartu Kelas */
+    .kelas-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .kelas-card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-left: 6px solid #0d47a1;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kelas-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .kelas-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -70%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { left: -70%; }
+      100% { left: 120%; }
+    }
+
+    .kelas-card h3 {
+      color: #0d47a1;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .kelas-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* Jadwal Per Hari */
+    .schedule-container {
+      margin-top: 2rem;
+      animation: fadeInUp 0.8s ease-in-out;
+    }
+
+    .hari-jadwal {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-in-out forwards;
+    }
+
+    .hari-jadwal.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hari-jadwal h4 {
+      color: #0d47a1;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .hari-jadwal ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .hari-jadwal li {
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .hari-jadwal li:hover {
+      background-color: #e3f2fd;
+    }
+
+    /* Fade Up Animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      color: #aaa;
+      animation: floatFooter 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatFooter {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-3px); }
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .school-logo-center {
+        width: 120px;
+        height: 120px;
+      }
+
+      h1.hero-title {
+        font-size: 2rem;
+      }
+
+      .kelas-card h3 {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1.hero-title {
+        font-size: 1.8rem;
+      }
+
+      .kelas-card p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <div class="background-particles" id="particles"></div>
+
+  <!-- Notifikasi Saat Halaman Dimuat -->
+  <div id="notif" class="notification">Selamat datang di jadwal pelajaran kami!</div>
+
+  <!-- Logo Sekolah -->
+  <img src="https://files.catbox.moe/1f9s9c " alt="Logo Sekolah" class="school-logo-center fade-up show">
+
+  <!-- Floating Menu Button -->
+  <div class="menu-btn" id="menuBtn">
+    <span id="hamburger-line"></span>
+  </div>
+
+  <!-- Overlay Menu -->
+  <div class="menu-overlay" id="menuOverlay">
+    <span class="overlay-close" id="closeBtn">&times;</span>
+    <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+    <a href="jadwal-mpls.html"><i class="fas fa-calendar-alt"></i> Jadwal MPLS</a>
+    <a href="#"><i class="fas fa-user-tie"></i> Data Guru</a>
+    <a href="data-osis.html"><i class="fas fa-users"></i> Data OSIS</a>
+  </div>
+
+  <!-- Konten Utama -->
+  <div class="container">
+    <header>
+      <h1 class="hero-title fade-up show"><i class="fas fa-book-open"></i> Jadwal Pelajaran</h1>
+      <p class="subtitle fade-up show">MTS LANTABOER</p>
+    </header>
+
+    <!-- Pilih Kelas -->
+    <div class="kelas-list fade-up show">
+      <div class="kelas-card" onclick="tampilkanJadwal('vii1')">
+        <h3>Kelas VII.1</h3>
+        <p>Jadwal kelas 7-1</p>
+      </div>
+
+      <div class="kelas-card" onclick="tampilkanJadwal('vii2')">
+        <h3>Kelas VII.2</h3>
+        <p>Jadwal kelas 7-2</p>
+      </div>
+
+      <div class="kelas-card" onclick="tampilkanJadwal('viii')">
+        <h3>Kelas VIII</h3>
+        <p>Jadwal kelas 8</p>
+      </div>
+
+      <div class="kelas-card" onclick="tampilkanJadwal('ix1')">
+        <h3>Kelas IX.1</h3>
+        <p>Jadwal kelas 9-1</p>
+      </div>
+
+      <div class="kelas-card" onclick="tampilkanJadwal('ix2')">
+        <h3>Kelas IX.2</h3>
+        <p>Jadwal kelas 9-2</p>
+      </div>
+    </div>
+
+    <!-- Jadwal Per Kelas -->
+    <div class="schedule-container" id="jadwalContainer">
+      <!-- Jadwal Kelas VII.1 -->
+      <div id="vii1" class="hari-jadwal">
+        <h4>Kelas VII.1</h4>
+        <ul><li><strong>Senin:</strong></li><li>06.30–07.40 → Upacara/Apel</li><li>07.40–09.00 → IPS</li><li>09.00–10.50 → PJOK</li><li>10.50–12.10 → Matematika</li><li>12.30–13.50 → Akidah Akhlak</li></ul>
+        <ul><li><strong>Selasa:</strong></li><li>07.00–08.20 → Bahasa Arab</li><li>08.20–09.40 → Kitab Kuning</li><li>10.10–11.30 → Bahasa Inggris</li><li>11.30–13.10 → SKI</li></ul>
+        <ul><li><strong>Rabu:</strong></li><li>07.00–08.20 → Qurdist</li><li>08.20–09.40 → Bahasa Inggris</li><li>10.10–11.30 → Prakarya</li><li>11.30–13.10 → Bahasa Indonesia</li></ul>
+        <ul><li><strong>Kamis:</strong></li><li>10.10–11.30 → Prakarya</li><li>11.30–13.10 → Bahasa Indonesia</li></ul>
+        <ul><li><strong>Jumat:</strong></li><li>07.00–09.00 → Pramuka</li><li>09.00–10.10 → Bahasa Inggris</li><li>10.10–12.10 → Kitab Kuning</li><li>12.30–13.10 → Bahasa Indonesia</li></ul>
+        <ul><li><strong>Sabtu:</strong></li><li>10.10–11.30 → Bahasa Inggris</li><li>11.30–12.10 → Akidah Akhlak</li><li>12.30–13.10 → PJOK</li></ul>
+      </div>
+
+      <!-- Jadwal Kelas VII.2 -->
+      <div id="vii2" class="hari-jadwal">
+        <h4>Kelas VII.2</h4>
+        <ul><li><strong>Senin:</strong></li><li>06.30–07.40 → Upacara/Apel</li><li>07.40–09.00 → Matematika</li><li>09.00–10.50 → IPS</li><li>10.50–12.10 → PJOK</li><li>12.30–13.50 → PPKN</li></ul>
+        <ul><li><strong>Selasa:</strong></li><li>07.00–08.20 → Qurdist</li><li>08.20–09.40 → Prakarya</li><li>10.10–11.30 → Bahasa Indonesia</li><li>11.30–13.10 → IPA</li></ul>
+        <ul><li><strong>Rabu:</strong></li><li>07.00–08.20 → Bahasa Inggris</li><li>08.20–09.40 → SKI</li><li>10.10–11.30 → SBK</li><li>11.30–13.10 → Akidah Akhlak</li></ul>
+        <ul><li><strong>Kamis:</strong></li><li>10.10–11.30 → SBK</li><li>11.30–13.10 → IPA</li></ul>
+        <ul><li><strong>Jumat:</strong></li><li>07.00–09.00 → Pramuka</li><li>09.00–10.10 → SKI</li><li>10.10–12.10 → Bahasa Arab</li></ul>
+        <ul><li><strong>Sabtu:</strong></li><li>10.10–11.30 → Fiqih</li><li>12.10–13.10 → TIK</li></ul>
+      </div>
+
+      <!-- Jadwal Kelas VIII -->
+      <div id="viii" class="hari-jadwal">
+        <h4>Kelas VIII</h4>
+        <ul><li><strong>Senin:</strong></li><li>06.30–07.40 → Upacara/Apel</li><li>07.40–09.00 → Qurdist</li><li>09.00–10.50 → Matematika</li><li>10.50–13.10 → SKI</li></ul>
+        <ul><li><strong>Selasa:</strong></li><li>07.00–08.20 → IPS</li><li>08.20–09.40 → PPKN</li><li>10.10–12.10 → IPA</li></ul>
+        <ul><li><strong>Rabu:</strong></li><li>07.00–08.20 → Bahasa Arab</li><li>08.20–09.40 → Kitab Kuning</li><li>10.10–11.30 → IPA</li><li>11.30–12.10 → Fiqih</li></ul>
+        <ul><li><strong>Kamis:</strong></li><li>10.10–11.30 → IPA</li><li>11.30–13.10 → Matematika</li></ul>
+        <ul><li><strong>Jumat:</strong></li><li>07.00–09.00 → Pramuka</li><li>09.00–10.10 → Kitab Kuning</li><li>10.10–12.10 → Bahasa Arab</li><li>12.30–13.10 → PJOK</li></ul>
+        <ul><li><strong>Sabtu:</strong></li><li>10.10–11.30 → Bahasa Arab</li><li>12.10–13.10 → Akidah Akhlak</li></ul>
+      </div>
+
+      <!-- Jadwal Kelas IX.1 -->
+      <div id="ix1" class="hari-jadwal">
+        <h4>Kelas IX.1</h4>
+        <ul><li><strong>Senin:</strong></li><li>06.30–07.40 → Upacara/Apel</li><li>07.40–09.00 → PJOK</li><li>09.00–10.50 → Bahasa Inggris</li><li>10.50–12.10 → Matematika</li><li>12.30–13.10 → TIK</li></ul>
+        <ul><li><strong>Selasa:</strong></li><li>07.00–08.20 → PJOK</li><li>08.20–09.40 → IPA</li><li>10.10–11.30 → Bahasa Inggris</li><li>11.30–13.10 → Fiqih</li></ul>
+        <ul><li><strong>Rabu:</strong></li><li>07.00–08.20 → IPS</li><li>08.20–09.40 → Bahasa Inggris</li><li>10.10–12.10 → Fiqih</li><li>12.30–13.10 → Bahasa Indonesia</li></ul>
+        <ul><li><strong>Kamis:</strong></li><li>10.10–11.30 → PPKN</li><li>11.30–13.10 → IPA</li></ul>
+        <ul><li><strong>Jumat:</strong></li><li>07.00–09.00 → PDM</li><li>09.00–10.10 → SBK</li><li>10.10–12.10 → SBK</li></ul>
+        <ul><li><strong>Sabtu:</strong></li><li>10.10–11.30 → Bahasa Indonesia</li><li>11.30–13.10 → PJOK</li></ul>
+      </div>
+
+      <!-- Jadwal Kelas IX.2 -->
+      <div id="ix2" class="hari-jadwal">
+        <h4>Kelas IX.2</h4>
+        <ul><li><strong>Senin:</strong></li><li>06.30–07.40 → Upacara/Apel</li><li>07.40–09.00 → Matematika</li><li>09.00–10.50 → Bahasa Inggris</li><li>10.50–12.10 → Bahasa Inggris</li><li>12.30–13.10 → TIK</li></ul>
+        <ul><li><strong>Selasa:</strong></li><li>07.00–08.20 → Qurdist</li><li>08.20–09.40 → Bahasa Indonesia</li><li>10.10–11.30 → Kitab Kuning</li><li>11.30–13.10 → Bahasa Arab</li></ul>
+        <ul><li><strong>Rabu:</strong></li><li>07.00–08.20 → Akidah Akhlak</li><li>08.20–09.40 → IPS</li><li>10.10–11.30 → Bahasa Arab</li><li>11.30–12.10 → Bahasa Arab</li></ul>
+        <ul><li><strong>Kamis:</strong></li><li>10.10–11.30 → Kitab Kuning</li><li>11.30–13.10 → Prakarya</li></ul>
+        <ul><li><strong>Jumat:</strong></li><li>07.00–09.00 → PDM</li><li>09.00–10.10 → IPS</li><li>10.10–12.10 → Bahasa Arab</li></ul>
+        <ul><li><strong>Sabtu:</strong></li><li>10.10–11.30 → Bahasa Arab</li><li>11.30–12.10 → SKI</li><li>12.30–13.10 → Prakarya</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer fade-up show">
+    Powered by @Kyoutaka.html [OSIS LANTABOER]
+  </footer>
+
+  <script>
+    // Generate particles
+    const particleContainer = document.getElementById('particles');
+    for (let i = 0; i < 100; i++) {
+      const div = document.createElement('div');
+      div.classList.add('particle');
+      div.style.left = Math.random() * 100 + '%';
+      div.style.top = Math.random() * 100 + '%';
+      div.style.width = div.style.height = `${Math.random() * 5 + 5}px`;
+      div.style.animationDuration = `${Math.random() * 5 + 10}s`;
+      div.style.opacity = Math.random();
+      particleContainer.appendChild(div);
+    }
+
+    // Fade up animation on scroll
+    const faders = document.querySelectorAll(".fade-up");
+    const appearOnScroll = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("show");
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Floating menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("active");
+      menuOverlay.classList.toggle("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      menuBtn.classList.remove("active");
+      menuOverlay.classList.remove("active");
+    });
+
+    window.addEventListener("click", (e) => {
+      if (
+        !menuOverlay.contains(e.target) &&
+        e.target !== menuBtn &&
+        !menuBtn.contains(e.target)
+      ) {
+        menuOverlay.classList.remove("active");
+        menuBtn.classList.remove("active");
+      }
+    });
+
+    // Efek klik pada kartu kelas
+    document.querySelectorAll('.kelas-card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.style.backgroundColor = '#e3f2fd';
+        card.style.transform = 'scale(1.03)';
+        setTimeout(() => {
+          card.style.backgroundColor = '';
+          card.style.transform = '';
+        }, 300);
+      });
+    });
+
+    // Tampilkan jadwal berdasarkan kelas
+    function tampilkanJadwal(id) {
+      const semuaJadwal = document.querySelectorAll('.hari-jadwal');
+      semuaJadwal.forEach(jadwal => {
+        jadwal.classList.remove('show');
+        jadwal.style.display = 'none';
+      });
+
+      const target = document.getElementById(id);
+      target.style.display = 'block';
+      setTimeout(() => {
+        target.classList.add('show');
+      }, 50);
+
+      // Scroll ke bagian jadwal
+      window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+    }
+
+    // Notifikasi saat halaman dimuat
+    window.addEventListener('load', () => {
+      const notif = document.getElementById('notif');
+      notif.classList.add('show');
+      setTimeout(() => {
+        notif.classList.add('hide');
+      }, 4000);
+    });
+  </script>
+</body>
+</html>
